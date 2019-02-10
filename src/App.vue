@@ -1,12 +1,22 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <app-header> </app-header>
+    <div class="row">
+      <div class="col-md-12">
+        <router-view></router-view>
+      </div>
     </div>
-    <router-view />
   </div>
 </template>
+
+<script>
+import Header from "./components/Header.vue";
+export default {
+  components: {
+    appHeader: Header
+  }
+};
+</script>
 
 <style>
 #app {
@@ -14,14 +24,6 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
   color: #2c3e50;
 }
 
