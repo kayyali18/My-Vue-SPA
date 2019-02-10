@@ -1,4 +1,3 @@
-
 <template>
   <h1>Stocks Container</h1>
 </template>
@@ -7,6 +6,6 @@
 // @ is an alias to /src
 
 export default {
-  name: "about",
+  name: "stocks"
 };
 </script>
