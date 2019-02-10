@@ -27,12 +27,23 @@
         </div>
         <div class="pull-right">
           <button
+            v-if="!stock.quantity"
             class="btn btn-success"
             :disabled="
               quantity <= 0 || !Number.isInteger(Math.floor(parseInt(quantity)))
             "
           >
-            {{ stock.quantity ? "Sell" : "Buy" }}
+            Buy
+          </button>
+          <button
+            v-else
+            class="btn btn-success"
+            :disabled="
+              quantity > stock.quantity ||
+                !Number.isInteger(Math.floor(parseInt(quantity)))
+            "
+          >
+            Sell
           </button>
         </div>
       </form>
