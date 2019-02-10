@@ -2,9 +2,19 @@
   <div class="col-sm-6 col-md-4">
     <div class="panel panel-success">
       <div class="panel-heading">
-        <h3 class="panel-title ">
-          {{ stock.name }} <small>(Price: {{ stock.price }})</small>
-        </h3>
+        <template v-if="stock.quantity">
+          <h3 class="panel-title ">
+            {{ stock.name }}
+            <small
+              >(Price: {{ stock.price }}) | Quantity {{ stock.quantity }}</small
+            >
+          </h3>
+        </template>
+        <template v-else>
+          <h3 class="panel-title ">
+            {{ stock.name }} <small>(Price: {{ stock.price }})</small>
+          </h3>
+        </template>
       </div>
       <form class="panel-body" @submit.prevent="buyStock">
         <div class="pull-left">
@@ -22,7 +32,7 @@
               quantity <= 0 || !Number.isInteger(Math.floor(parseInt(quantity)))
             "
           >
-            Buy
+            {{ stock.quantity ? "Sell" : "Buy" }}
           </button>
         </div>
       </form>
