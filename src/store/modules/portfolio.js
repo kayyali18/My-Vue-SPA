@@ -21,10 +21,11 @@ const mutations = {
   },
   SELL_STOCK(state, { stockId, quantity, stockPrice }) {
     const record = state.stocks.find(stock => stock.id == stockId);
+    let stateCopy = state;
     if (record.quantity > quantity) {
       record.quantity -= quantity;
     } else {
-      state.stocks.splice(state.stocks.indexOf(record));
+      state.stocks = stateCopy.stocks.filter(stock => stock !== record);
     }
     state.funds += stockPrice * quantity;
   }

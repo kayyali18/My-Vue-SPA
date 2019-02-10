@@ -40,6 +40,7 @@
             class="btn btn-success"
             :disabled="
               quantity > stock.quantity ||
+                quantity <= 0 ||
                 !Number.isInteger(Math.floor(parseInt(quantity)))
             "
           >
