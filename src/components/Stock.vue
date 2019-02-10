@@ -2,7 +2,7 @@
   <div class="col-sm-6 col-md-4">
     <div class="panel panel-success">
       <div class="panel-heading">
-        <template v-if="stock.quantity">
+        <template v-if="sell">
           <h3 class="panel-title ">
             {{ stock.name }}
             <small
@@ -16,7 +16,7 @@
           </h3>
         </template>
       </div>
-      <form class="panel-body" @submit.prevent="buyStock">
+      <form class="panel-body" @submit.prevent="dealStock">
         <div class="pull-left">
           <input
             type="number"
@@ -27,7 +27,7 @@
         </div>
         <div class="pull-right">
           <button
-            v-if="!stock.quantity"
+            v-if="!sell"
             class="btn btn-success"
             :disabled="
               quantity <= 0 || !Number.isInteger(Math.floor(parseInt(quantity)))
@@ -53,7 +53,7 @@
 
 <script>
 export default {
-  props: ["stock"],
+  props: ["stock", "sell"],
   data() {
     return {
       quantity: 0
@@ -67,9 +67,22 @@ export default {
         quantity: this.quantity
       };
 
-      console.log(order);
       this.$store.dispatch("buyStock", order);
       this.quantity = 0;
+    },
+    sellStock() {
+      const order = {
+        stockId: this.stock.id,
+        stockPrice: this.stock.price,
+        quantity: this.quantity
+      };
+
+      this.$store.dispatch("sellStock", order);
+      this.quantity = 0;
+    },
+    dealStock() {
+      if (this.sell) this.sellStock();
+      else this.buyStock();
     }
   }
 };

@@ -6,6 +6,7 @@
         v-for="stock in stocks"
         :stock="stock"
         :key="stock.id"
+        :sell="false"
       ></app-stock>
     </div>
   </section>
