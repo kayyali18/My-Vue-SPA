@@ -28,6 +28,10 @@ const mutations = {
       state.stocks = stateCopy.stocks.filter(stock => stock !== record);
     }
     state.funds += stockPrice * quantity;
+  },
+  SET_PORTFOLIO(state, portfolio) {
+    state.funds = portfolio.funds;
+    state.stocks = portfolio.stockPortfolio ? portfolio.stockPortfolio : [];
   }
 };
 

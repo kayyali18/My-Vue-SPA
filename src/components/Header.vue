@@ -43,8 +43,8 @@
             :class="{ showAll: isDropdownOpen }"
             aria-labelledby="navbarDropdownMenuLink"
           >
-            <a class="dropdown-item" href="#">Save Data</a>
-            <a class="dropdown-item" href="#">Load Data</a>
+            <a class="dropdown-item" href="#" @click="saveData">Save Data</a>
+            <a class="dropdown-item" href="#" @click="getData">Load Data</a>
           </div>
         </li>
       </ul>
@@ -62,14 +62,29 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["randomiseStocks"]),
+    ...mapActions(["randomiseStocks", "loadData"]),
+
     endDay() {
       this.randomiseStocks();
+    },
+    saveData() {
+      const data = {
+        funds: this.funds,
+        stockPortfolio: this.stockPortfolio,
+        stocks: this.stocks
+      };
+
+      localStorage.setItem("data", JSON.stringify(data));
+    },
+    getData() {
+      this.loadData();
     }
   },
   computed: {
     ...mapGetters({
-      funds: "funds"
+      funds: "funds",
+      stockPortfolio: "stockPortfolio",
+      stocks: "stocks"
     })
   }
 };
