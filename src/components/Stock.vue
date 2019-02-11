@@ -2,21 +2,50 @@
   <div class="col-sm-6 col-md-4">
     <div class="panel panel-success">
       <div class="panel-heading">
-        <h3 class="panel-title ">
-          {{ stock.name }} <small>(Price: {{ stock.price }})</small>
-        </h3>
+        <template v-if="sell">
+          <h3 class="panel-title ">
+            {{ stock.name }}
+            <small
+              >(Price: {{ stock.price }}) | Quantity {{ stock.quantity }}</small
+            >
+          </h3>
+        </template>
+        <template v-else>
+          <h3 class="panel-title ">
+            {{ stock.name }} <small>(Price: {{ stock.price }})</small>
+          </h3>
+        </template>
       </div>
-      <form class="panel-body" @submit.prevent="buyStock">
+      <form class="panel-body" @submit.prevent="dealStock">
         <div class="pull-left">
           <input
-            type="text"
+            type="number"
             class="form-control"
             placeholder="Quantity"
             v-model="quantity"
           />
         </div>
         <div class="pull-right">
-          <button class="btn btn-success">Buy</button>
+          <button
+            v-if="!sell"
+            class="btn btn-success"
+            :disabled="
+              quantity <= 0 || !Number.isInteger(Math.floor(parseInt(quantity)))
+            "
+          >
+            Buy
+          </button>
+          <button
+            v-else
+            class="btn btn-primary"
+            :disabled="
+              quantity > stock.quantity ||
+                quantity <= 0 ||
+                !Number.isInteger(Math.floor(parseInt(quantity)))
+            "
+          >
+            Sell
+          </button>
         </div>
       </form>
     </div>
@@ -25,7 +54,7 @@
 
 <script>
 export default {
-  props: ["stock"],
+  props: ["stock", "sell"],
   data() {
     return {
       quantity: 0
@@ -39,8 +68,22 @@ export default {
         quantity: this.quantity
       };
 
-      console.log(order);
+      this.$store.dispatch("buyStock", order);
       this.quantity = 0;
+    },
+    sellStock() {
+      const order = {
+        stockId: this.stock.id,
+        stockPrice: this.stock.price,
+        quantity: this.quantity
+      };
+
+      this.$store.dispatch("sellStock", order);
+      this.quantity = 0;
+    },
+    dealStock() {
+      if (this.sell) this.sellStock();
+      else this.buyStock();
     }
   }
 };
