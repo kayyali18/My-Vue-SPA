@@ -37,7 +37,7 @@
           </button>
           <button
             v-else
-            class="btn btn-success"
+            class="btn btn-primary"
             :disabled="
               quantity > stock.quantity ||
                 quantity <= 0 ||
