@@ -51,7 +51,7 @@ export default {
   }
   to {
     transform: translateY(0);
-    opacity: 1;
+    opacity: 1.1;
   }
 }
 
