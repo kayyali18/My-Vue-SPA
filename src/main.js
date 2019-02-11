@@ -5,6 +5,8 @@ import store from "./store/store";
 
 Vue.config.productionTip = false;
 
+Vue.filter("currency", value => "$" + value.toLocaleString());
+
 new Vue({
   router,
   store,

@@ -12,7 +12,8 @@
         </template>
         <template v-else>
           <h3 class="panel-title ">
-            {{ stock.name }} <small>(Price: {{ stock.price }})</small>
+            {{ stock.name }}
+            <small>(Price: {{ stock.price | currency }})</small>
           </h3>
         </template>
       </div>
@@ -23,6 +24,7 @@
             class="form-control"
             placeholder="Quantity"
             v-model="quantity"
+            :class="{ danger: hasFunds, danger: hasStocks }"
           />
         </div>
         <div class="pull-right">
@@ -41,12 +43,12 @@
             v-else
             class="btn btn-primary"
             :disabled="
-              quantity > stock.quantity ||
+              hasStocks ||
                 quantity <= 0 ||
                 !Number.isInteger(Math.floor(parseInt(quantity)))
             "
           >
-            Sell
+            {{ hasStocks ? "Too Much" : "Sell" }}
           </button>
         </div>
       </form>
@@ -65,6 +67,10 @@ export default {
   computed: {
     hasFunds() {
       return this.quantity * this.stock.price > this.funds;
+    },
+
+    hasStocks() {
+      return this.quantity > this.stock.quantity;
     }
   },
   methods: {
@@ -106,4 +112,8 @@ export default {
 .panel-body
   display: flex;
   justify-content: space-between;
+
+
+.danger
+  border: 2px solid red;
 </style>

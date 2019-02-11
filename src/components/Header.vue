@@ -20,9 +20,13 @@
           >
         </li>
       </ul>
-      <strong class="navbar-text navbar-right">Funds: $ {{ funds }}</strong>
+      <strong class="navbar-text navbar-right"
+        >Funds: {{ funds | currency }}</strong
+      >
       <ul class="navbar-nav navbar-right">
-        <li class="nav-item"><a class="nav-link">End Day</a></li>
+        <li class="nav-item">
+          <a class="nav-link" @click="endDay">End Day</a>
+        </li>
         <li class="nav-item dropdown">
           <a
             class="nav-link dropdown-toggle"
@@ -45,9 +49,15 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
+  methods: {
+    ...mapActions(["randomiseStocks"]),
+    endDay() {
+      this.randomiseStocks();
+    }
+  },
   computed: {
     ...mapGetters({
       funds: "funds"
