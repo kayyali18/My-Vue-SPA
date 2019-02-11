@@ -20,6 +20,7 @@
           >
         </li>
       </ul>
+      <strong class="navbar-text navbar-right">Funds: $ {{ funds }}</strong>
       <ul class="navbar-nav navbar-right">
         <li class="nav-item"><a class="nav-link">End Day</a></li>
         <li class="nav-item dropdown">
@@ -42,6 +43,18 @@
     </div>
   </nav>
 </template>
+
+<script>
+import { mapGetters } from "vuex";
+
+export default {
+  computed: {
+    ...mapGetters({
+      funds: "funds"
+    })
+  }
+};
+</script>
 
 <style lang="sass" scoped>
 .nav

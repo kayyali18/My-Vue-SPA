@@ -30,10 +30,12 @@
             v-if="!sell"
             class="btn btn-success"
             :disabled="
-              quantity <= 0 || !Number.isInteger(Math.floor(parseInt(quantity)))
+              hasFunds ||
+                quantity <= 0 ||
+                !Number.isInteger(Math.floor(parseInt(quantity)))
             "
           >
-            Buy
+            {{ hasFunds ? "Insufficient Funds" : "Buy" }}
           </button>
           <button
             v-else
@@ -54,11 +56,16 @@
 
 <script>
 export default {
-  props: ["stock", "sell"],
+  props: ["stock", "sell", "funds"],
   data() {
     return {
       quantity: 0
     };
+  },
+  computed: {
+    hasFunds() {
+      return this.quantity * this.stock.price > this.funds;
+    }
   },
   methods: {
     buyStock() {
@@ -98,5 +105,5 @@ export default {
 
 .panel-body
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
 </style>
