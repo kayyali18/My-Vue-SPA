@@ -13,6 +13,8 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 // @ is an alias to /src
 import Stock from "@/components/Stock.vue";
 
@@ -22,9 +24,9 @@ export default {
     appStock: Stock
   },
   computed: {
-    stocks() {
-      return this.$store.getters.stockPortfolio;
-    }
+    ...mapGetters({
+      stocks: "stockPortfolio"
+    })
   }
 };
 </script>
