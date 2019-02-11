@@ -7,6 +7,7 @@
         :stock="stock"
         :key="stock.id"
         :sell="false"
+        :funds="funds"
       ></app-stock>
     </div>
   </section>
@@ -24,6 +25,9 @@ export default {
   computed: {
     stocks() {
       return this.$store.getters.stocks;
+    },
+    funds() {
+      return this.$store.getters.funds;
     }
   }
 };

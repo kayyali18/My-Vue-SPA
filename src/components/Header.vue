@@ -20,9 +20,14 @@
           >
         </li>
       </ul>
+      <strong class="navbar-text navbar-right"
+        >Funds: {{ funds | currency }}</strong
+      >
       <ul class="navbar-nav navbar-right">
-        <li class="nav-item"><a class="nav-link">End Day</a></li>
-        <li class="nav-item dropdown">
+        <li class="nav-item">
+          <a class="nav-link" @click="endDay">End Day</a>
+        </li>
+        <li class="nav-item dropdown" @click="isDropdownOpen = !isDropdownOpen">
           <a
             class="nav-link dropdown-toggle"
             href="#"
@@ -33,7 +38,11 @@
           >
             Save / Load
           </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <div
+            class="dropdown-menu"
+            :class="{ showAll: isDropdownOpen }"
+            aria-labelledby="navbarDropdownMenuLink"
+          >
             <a class="dropdown-item" href="#">Save Data</a>
             <a class="dropdown-item" href="#">Load Data</a>
           </div>
@@ -42,6 +51,29 @@
     </div>
   </nav>
 </template>
+
+<script>
+import { mapGetters, mapActions } from "vuex";
+
+export default {
+  data() {
+    return {
+      isDropdownOpen: false
+    };
+  },
+  methods: {
+    ...mapActions(["randomiseStocks"]),
+    endDay() {
+      this.randomiseStocks();
+    }
+  },
+  computed: {
+    ...mapGetters({
+      funds: "funds"
+    })
+  }
+};
+</script>
 
 <style lang="sass" scoped>
 .nav
@@ -63,4 +95,8 @@
     flex-wrap: wrap;
     justify-content: space-between;
     margin: 0;
+
+.showAll
+
+  display: inline;
 </style>
